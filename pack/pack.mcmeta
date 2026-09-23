@@ -1,0 +1,11 @@
+{
+  "pack": {
+    "description": [
+      {"text": "Enchanted Veinminer", "color": "light_purple", "bold": true},
+      {"text": " – veinmining needs an enchantment\n", "color": "gray"},
+      {"text": "v1.0.0 by Profet · needs Veinminer 1.1.0+", "color": "dark_gray"}
+    ],
+    "min_format": [107, 1],
+    "max_format": 121
+  }
+}
