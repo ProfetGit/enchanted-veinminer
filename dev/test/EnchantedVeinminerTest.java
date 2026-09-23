@@ -279,7 +279,7 @@ class Scenarios {
     static final BlockPos O = new BlockPos(OX, OY, OZ);
     static final String ENCH = "enchanted_veinminer:veinminer";
     static final String HAS = "[minecraft:enchantments~[{enchantments:\"" + ENCH + "\"}]]";
-    static final String BASE = "file/Veinminer-1.1.0.zip", OLD = "file/veinminer-1.0.0", ADDON = "file/EnchantedVeinminer-1.0.0.zip";
+    static final String BASE = baseZip(), OLD = "file/veinminer-1.0.0", ADDON = "file/EnchantedVeinminer-1.0.0.zip";
     static final int[][] IRON = {{0,0,0},{1,0,0},{2,0,0},{2,1,0},{1,0,1},{3,2,1}};
     static final int[][] FOUR = {{0,0,0},{1,0,0},{0,1,0},{1,1,0}};
 
@@ -316,9 +316,28 @@ class Scenarios {
 
     static int count(Map<String, Integer> items, String id) { return items.getOrDefault(id, 0); }
 
+    static String baseZip() {
+        try (var s = Files.list(Path.of("world/datapacks"))) {
+            return "file/" + s.map(f -> f.getFileName().toString()).filter(n -> n.startsWith("Veinminer-") && n.endsWith(".zip")).findFirst().orElseThrow();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static boolean animating() {
+        return EnchantedVeinminerTest.on(() -> {
+            for (net.minecraft.world.entity.Entity e : EnchantedVeinminerTest.level.getAllEntities())
+                if (e.entityTags().stream().anyMatch(g -> g.equals("veinminer.ctl") || g.equals("veinminer.fx") || g.equals("veinminer.ghost") || g.equals("veinminer.pend"))) return true;
+            return false;
+        });
+    }
+
+    /** Mines O, then waits for Veinminer's chain animation (1.2.0+) to deliver the held drops. */
     static void mine() throws Exception {
         EnchantedVeinminerTest.destroy(O);
         ticks(3);
+        for (int i = 0; i < 80 && animating(); i++) ticks(1);
+        ticks(1);
     }
 
     static String held() {
@@ -492,7 +511,7 @@ class Scenarios {
         cmd("execute as VeinTester run function veinminer:settings");
         List<String> menu = chat();
         for (String m : menu) info("menu| " + m);
-        check("settings menu says the enchantment is needed", menu.size() == 11 && menu.get(1).contains("Your pickaxe needs the Veinminer enchantment."),
+        check("settings menu says the enchantment is needed", menu.size() == 12 && menu.get(1).contains("Your pickaxe needs the Veinminer enchantment."),
             menu.size() + " lines");
 
         // 6. /reload keeps everything
