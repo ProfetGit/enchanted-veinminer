@@ -70,6 +70,8 @@ If Veinminer is missing or older than 1.1.0, the add-on says so in chat with a d
 
 **As a mod:** both packs also come as mods for Fabric, Quilt, NeoForge and Forge. Put `EnchantedVeinminer-1.0.0-fabric.jar` (Fabric or Quilt, needs Fabric API) or `EnchantedVeinminer-1.0.0-forge.jar` (Forge or NeoForge) in the `mods` folder, together with Veinminer as a mod or as a data pack. A mod loads before the world does, so the enchantment is always registered and the restart note above doesn't apply. Use either the mod or the zip, not both.
 
+**As a server plugin:** both packs also come as plugins for Paper, Purpur, Spigot and Bukkit. Put `EnchantedVeinminer-1.0.0-plugin.jar` in the `plugins` folder, together with Veinminer as a plugin or as a data pack, and restart the server. On Paper and Purpur the enchantment works right away. On Spigot and Bukkit the plugin copies the pack into `world/datapacks/` when the server stops, so restart once more. Use either the plugin or the zip, not both.
+
 ## Compatibility
 
 - One zip supports Minecraft Java **26.2 and 26.3**.
@@ -89,6 +91,8 @@ If Veinminer is missing or older than 1.1.0, the add-on says so in chat with a d
 3. Reopen the world or restart the server. Veinminer then works without the enchantment again, and the enchantment is removed from all items (see above).
 
 Installed as a mod? Run step 1, then remove the jar from the `mods` folder and restart the game or server.
+
+Installed as a plugin? Run step 1, then remove the jar from the `plugins` folder. On Spigot and Bukkit, also delete `world/datapacks/enchanted_veinminer.zip`. Restart the server.
 
 ## Support
 
