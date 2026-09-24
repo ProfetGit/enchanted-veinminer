@@ -1,0 +1,16 @@
+{
+  "id": "enchanted_veinminer",
+  "name": "Enchanted Veinminer",
+  "summary": "Veinmining becomes an enchantment. An add-on for Veinminer.",
+  "slug": "enchanted-veinminer",
+  "repo": "ProfetGit/enchanted-veinminer",
+  "recommends": {
+    "vanilla_veinminer": "1.1.0"
+  },
+  "smoke": [
+    {
+      "command": "scoreboard players get #problem enchanted_veinminer.data",
+      "expect": "#problem has 0 \\[enchanted_veinminer\\.data\\]"
+    }
+  ]
+}
