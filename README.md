@@ -40,6 +40,10 @@ Enchanted Veinminer is free. If it saves you some time, a coffee helps fund the 
 
 [![Support me on Ko-fi](https://raw.githubusercontent.com/ProfetGit/assets/main/kofi-banner.gif)](https://ko-fi.com/profetgit)
 
+Want your own server to play on with friends? My BisectHosting affiliate link gives you 25% off the first month, and I get a small commission.
+
+[![Get 25% off your first month at BisectHosting](https://raw.githubusercontent.com/ProfetGit/assets/main/bisecthosting-banner.gif)](https://url-shortener.curseforge.com/Pp2BN)
+
 ![License](https://raw.githubusercontent.com/ProfetGit/enchanted-veinminer/main/docs/desc/title-license.gif)
 
 © 2026 Profet. All rights reserved.
