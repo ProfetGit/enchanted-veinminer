@@ -7,7 +7,7 @@
 
 **Veinmining becomes an enchantment.**
 
-An add-on for **[Veinminer](https://modrinth.com/datapack/vanilla-veinminer)** (1.1.0 or newer; install both) for **Minecraft Java 26.2 and 26.3**. It adds the **Veinminer** pickaxe enchantment. Only a pickaxe that has it breaks the whole vein; without it, you mine block by block as in vanilla. Early on you dig the hard way, later you earn the shortcut.
+An add-on for **[Veinminer](https://www.curseforge.com/minecraft/mc-mods/profets-veinminer)** (1.1.0 or newer; install both) for **Minecraft Java 26.2 and 26.3**. It adds the **Veinminer** pickaxe enchantment. Only a pickaxe that has it breaks the whole vein; without it, you mine block by block as in vanilla. Early on you dig the hard way, later you earn the shortcut.
 
 Here's Veinminer in action:
 
