@@ -1,4 +1,4 @@
-data modify storage enchanted_veinminer:meta version set value "1.0.0"
+data modify storage enchanted_veinminer:meta version set value "1.0.1"
 scoreboard objectives add enchanted_veinminer.data dummy
 scoreboard objectives add enchanted_veinminer.left minecraft.custom:minecraft.leave_game
 scoreboard players set #registered enchanted_veinminer.data 0

@@ -1,7 +1,7 @@
 -- Enchanted Veinminer icon sprites. Run through the aseprite MCP: dofile("<abs>/EnchantedVeinminer/dev/icon/draw_sprites.lua")
 dofile("/home/emppu/Projects/Minecraft Datapacks/.claude/skills/pack-icon-animation/assets/pixel_art.lua")
-local OUT = "/home/emppu/Projects/Minecraft Datapacks/EnchantedVeinminer/dev/icon/sprites/"
-local VM = "/home/emppu/Projects/Minecraft Datapacks/Veinminer/dev/icon/sprites/"
+local OUT = "/home/emppu/Projects/Minecraft Datapacks/packs/EnchantedVeinminer/dev/icon/sprites/"
+local VM = "/home/emppu/Projects/Minecraft Datapacks/packs/Veinminer/dev/icon/sprites/"
 local pc = app.pixelColor
 
 local stone = { l = "#C1C3C7", m = "#9EA1AC", k = "#797C94" }

@@ -40,6 +40,57 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 public class EnchantedVeinminerTest {
+
+    /** Entity tags: entityTags() in 26.x, getTags() before. */
+    @SuppressWarnings("unchecked")
+    static java.util.Set<String> tagsOf(net.minecraft.world.entity.Entity e) {
+        try {
+            return (java.util.Set<String>) e.getClass().getMethod("entityTags").invoke(e);
+        } catch (ReflectiveOperationException ex) {
+            try {
+                return (java.util.Set<String>) e.getClass().getMethod("getTags").invoke(e);
+            } catch (ReflectiveOperationException ex2) {
+                throw new RuntimeException(ex2);
+            }
+        }
+    }
+
+    /** A sound's id: location() in 26.x, getLocation() before. */
+    static Object soundId(net.minecraft.sounds.SoundEvent s) {
+        try {
+            return s.getClass().getMethod("location").invoke(s);
+        } catch (ReflectiveOperationException e) {
+            try {
+                return s.getClass().getMethod("getLocation").invoke(s);
+            } catch (ReflectiveOperationException e2) {
+                throw new RuntimeException(e2);
+            }
+        }
+    }
+
+    /** Game rule names: snake_case from 1.21.11, camelCase before. */
+    static String rule(String snake) {
+        boolean legacy = String.join(" ", cmd("gamerule doTileDrops")).contains("currently set");
+        if (!legacy) return snake;
+        StringBuilder b = new StringBuilder();
+        boolean up = false;
+        for (char c : snake.toCharArray()) {
+            if (c == '_') up = true;
+            else {
+                b.append(up ? Character.toUpperCase(c) : c);
+                up = false;
+            }
+        }
+        String camel = b.toString();
+        return switch (snake) {
+            case "block_drops" -> "doTileDrops";
+            case "max_command_sequence_length" -> "maxCommandChainLength";
+            case "max_block_modifications" -> "commandModificationBlockLimit";
+            case "mob_griefing" -> "mobGriefing";
+            case "do_tile_drops" -> "doTileDrops";
+            default -> camel;
+        };
+    }
     static MinecraftServer server;
     static ServerLevel level;
     static ServerPlayer player;
@@ -301,6 +352,21 @@ public class EnchantedVeinminerTest {
         }
     }
 
+    static String addonZip() {
+        try (var s = Files.list(Path.of("world/datapacks"))) {
+            return "file/" + s.map(f -> f.getFileName().toString()).filter(n -> n.startsWith("EnchantedVeinminer-") && n.endsWith(".zip")).findFirst().orElseThrow();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /** Tool tiers of this release: copper tools came with 1.21.9. */
+    static String[] tiers() {
+        boolean copper = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream().anyMatch(i -> String.valueOf(i).contains("copper_pickaxe"));
+        return copper ? new String[] {"wooden", "stone", "copper", "golden", "iron", "diamond", "netherite"}
+            : new String[] {"wooden", "stone", "golden", "iron", "diamond", "netherite"};
+    }
+
     static void info(String msg) {
         System.out.println("[INFO] " + msg);
     }
@@ -314,7 +380,7 @@ class Scenarios {
     // on a plugin platform run.sh passes the base's and the add-on's pack ids in -Dharness.packs
     static final String[] PACKS = System.getProperty("harness.packs", "").split(" ");
     static final String BASE = PACKS.length == 2 ? PACKS[0] : baseZip(), OLD = "file/veinminer-1.0.0",
-        ADDON = PACKS.length == 2 ? PACKS[1] : "file/EnchantedVeinminer-1.0.0.zip";
+        ADDON = PACKS.length == 2 ? PACKS[1] : EnchantedVeinminerTest.addonZip();
     static final int[][] IRON = {{0,0,0},{1,0,0},{2,0,0},{2,1,0},{1,0,1},{3,2,1}};
     static final int[][] FOUR = {{0,0,0},{1,0,0},{0,1,0},{1,1,0}};
 
@@ -362,7 +428,7 @@ class Scenarios {
     static boolean animating() {
         return EnchantedVeinminerTest.on(() -> {
             for (net.minecraft.world.entity.Entity e : EnchantedVeinminerTest.level.getAllEntities())
-                if (e.entityTags().stream().anyMatch(g -> g.equals("veinminer.ctl") || g.equals("veinminer.fx") || g.equals("veinminer.ghost") || g.equals("veinminer.pend"))) return true;
+                if (EnchantedVeinminerTest.tagsOf(e).stream().anyMatch(g -> g.equals("veinminer.ctl") || g.equals("veinminer.fx") || g.equals("veinminer.ghost") || g.equals("veinminer.pend"))) return true;
             return false;
         });
     }
@@ -454,7 +520,7 @@ class Scenarios {
         bar = chat();
         check("action bar reports 6 blocks", bar.stream().anyMatch(m -> m.startsWith("[actionbar]") && m.contains("6 blocks mined")), bar.toString());
 
-        for (String p : new String[] {"wooden", "stone", "copper", "golden", "iron", "diamond", "netherite"}) {
+        for (String p : EnchantedVeinminerTest.tiers()) {
             arena();
             tool("minecraft:" + p + "_pickaxe");
             en = cmd("enchant VeinTester " + ENCH);

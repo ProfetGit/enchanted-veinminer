@@ -7,7 +7,7 @@
 // then the Veinminer strike: one hit, the lapis vein pops block by block, drops bounce and get picked up, everything respawns.
 var VM = (function () {
   const fs = require('fs');
-  const DIR = '/home/emppu/Projects/Minecraft Datapacks/EnchantedVeinminer/dev/icon/';
+  const DIR = '/home/emppu/Projects/Minecraft Datapacks/packs/EnchantedVeinminer/dev/icon/';
   const TEX = DIR + 'sprites/';
   const FPS = 25, DT = 1 / FPS, LEN = 3.2;
   const CAM_POS = [0, 60, 104], CAM_TARGET = [0, 16, 0], CAM_PAN = [2.7, 12, 0], CAM_ZOOM = 0.22;
