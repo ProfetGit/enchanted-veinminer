@@ -7,3 +7,6 @@ dev/icon/banner_frames/
 dev/icon/contact.png
 # textures extracted from the Minecraft jar (Mojang's)
 dev/icon/textures/
+release-art/
+dev/icon/frames60/
+dev/icon/banner_frames60/
